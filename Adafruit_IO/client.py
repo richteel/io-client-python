@@ -104,6 +104,24 @@ class Client(object):
         path = "api/feeds/{0}/data/send".format(feed_name)
         return Data.from_dict(self._post(path, {'value': value}))
 
+    def sendLoc(self, feed_name, value, latitude, longitude, elevation):
+        """Helper function to simplify adding a value to a feed.  Will find the
+        specified feed by name or create a new feed if it doesn't exist, then
+        will append the provided value to the feed.  Returns a Data instance
+        with details about the newly appended row of data.
+        """
+        path = "api/feeds/{0}/data/send".format(feed_name)
+        return Data.from_dict(self._post(path, {'value': value, 'lat': latitude, 'lon': longitude, 'ele': elevation}))
+
+    def sendLocEpoch(self, feed_name, value, latitude, longitude, elevation, epoch):
+        """Helper function to simplify adding a value to a feed.  Will find the
+        specified feed by name or create a new feed if it doesn't exist, then
+        will append the provided value to the feed.  Returns a Data instance
+        with details about the newly appended row of data.
+        """
+        path = "api/feeds/{0}/data/send".format(feed_name)
+        return Data.from_dict(self._post(path, {'value': value, 'lat': latitude, 'lon': longitude, 'ele': elevation, 'epoch': epoch}))
+
     def append(self, feed, value):
         """Helper function to simplify adding a value to a feed.  Will append the
         specified value to the feed identified by either name, key, or ID.
